@@ -34,3 +34,34 @@ body {
   justify-content: center;
   align-items: center;
 }
+.your-cart {
+  cursor: pointer;
+}
+.cart-div {
+  display: flex;
+  flex-direction: row;
+  border: 1px solid darkgray;
+  margin: 10px;
+  width: 800px;
+  box-sizing: border-box;
+  padding: 10px;
+}
+.cart-img {
+  margin-right: 10px;
+}
+.cart-img img {
+  width: 250px;
+  padding: 10px;
+}
+
+.your-cart {
+  position: relative;
+}
+.mini-cart {
+  position: absolute;
+  border: 1px solid black;
+  width: 250px;
+  height: 300px;
+  background-color: white;
+  padding: 5px;
+}
