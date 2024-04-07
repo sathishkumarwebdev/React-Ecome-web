@@ -58,7 +58,7 @@ export function Products() {
 
   return (
     <>
-      {" "}
+      
       
         <div className="your-cart" onClick={()=>navClick()}>
           Your Cart:{totalCartItem}
