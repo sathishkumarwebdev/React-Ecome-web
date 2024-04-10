@@ -48,7 +48,5 @@ export function CartProvider(props) {
     </cartContext.Provider>
   );
 
-  //   return <userContext.Provider value={"hello"}>
-  //     prop.Child
-  //   </userContext.Provider>;
+
 }

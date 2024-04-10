@@ -3,18 +3,30 @@ import { useEffect, useState, useContext } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useNavigate } from "react-router";
 import { cartContext } from "../Providers/CartProvider";
+import {loginContext} from "../Providers/LoginProvider";
+import { MiniAddCart } from "./MiniAddCart";
+import {NavBar} from "../pages/NavBar";
 
 export function Products() {
   const [products, setProducts] = useState([]);
+  const [addCartClick, setaddCartClick] = useState(false);
   const navigate = useNavigate();
   const context = useContext(cartContext);
+  const {accessToken}=useContext(loginContext)
   const { cart, dispatch } = context;
+  console.log(accessToken);
 
   useEffect(() => {
     const getData = async () => {
-      const { products } = await fetch("https://dummyjson.com/products").then(
-        (res) => res.json()
-      );
+      const { products } = await fetch("https://dummyjson.com/products", {
+        method: "GET", // or 'PUT'
+        headers: {
+          // Accept: "application/json",
+          Authorization: `Bearer ${accessToken}`,
+          "Content-Type": "application/json",
+        },
+        // body: JSON.stringify(data),
+      }).then((res) => res.json());
       setProducts(products);
     };
 
@@ -46,7 +58,7 @@ export function Products() {
     dispatch({ type: "removeCart", payload: { product } });
   };
 
-  function navClick() {
+  function navClick(e) {
     navigate("/Details");
   }
 
@@ -58,11 +70,31 @@ export function Products() {
 
   return (
     <>
-      
-      
-        <div className="your-cart" onClick={()=>navClick()}>
+      <NavBar/>
+      <div className="the-cart">
+        <div
+          className="your-cart"
+          onClick={() => {
+            setaddCartClick(!addCartClick);
+          }}
+        >
           Your Cart:{totalCartItem}
-          
+          {addCartClick ? (
+            <div className="mini-cart">
+              {cart.map((item) => (
+                <MiniAddCart item={item} dispatch={dispatch} />
+              ))}
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navClick();
+                }}
+              >
+                see more
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
       <div className="container">
         {products.map((product) => (
