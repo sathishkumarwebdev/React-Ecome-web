@@ -1,6 +1,11 @@
 import {createContext,useState} from "react";
 
-export const loginContext=createContext([]);
+export const loginContext = createContext({
+  accessToken: null,
+  setaccessToken: null,
+  isAuthentication: null,
+  setisAuthentication: null,
+});
 
 export function LoginProvider(props){
     const [accessToken,setaccessToken]=useState("");

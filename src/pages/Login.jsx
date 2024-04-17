@@ -1,13 +1,16 @@
 import { React } from "react";
 import { useState, useContext, useEffect } from "react";
 import { loginContext } from "../Providers/LoginProvider";
+import logoBlack from "../assests/logo-black.png";
 // let userName = "sathish";
 // let userPassword = "12345";
 export function Login({ setAthu }) {
   //hooks
   const [name, setName] = useState("");
   const [password, setPassword] = useState("");
-  const { setaccessToken } = useContext(loginContext);
+  const [trigger, setTrigger] = useState(false);
+  const { accessToken, setaccessToken } = useContext(loginContext);
+  const [items, setItems] = useState([]);
 
   // const handleClick=(e)=> {
   //   e.preventDefault();
@@ -34,12 +37,18 @@ export function Login({ setAthu }) {
 
       const result = await response.json();
       console.log("Success:", result);
-      // localStorage.setItem(result, result.access_token);
+
+      localStorage.setItem("access-token", JSON.stringify(result));
+      setAthu(true);
+
       // let datas = localStorage.getItem(result);
       // setaccessToken(datas);
-      // setaccessToken(result);
+      //       if(setaccessToken){setaccessToken(result.access_token);
+      //       setAthu(true); }
 
-      setAthu(true);
+      // else{
+      //   console.log("error");
+      // }
     } catch (error) {
       console.error("Error:", error);
     }
@@ -60,22 +69,28 @@ export function Login({ setAthu }) {
   return (
     <>
       <div className="login-box">
+        <div className="logo-login">
+          <img src={logoBlack} alt="logo" />
+        </div>
         <div className="login-form">
-          <h3>Login</h3>
-          Enter username 
-          <input
-            value={name}
-            onChange={handleUserName}
-            placeholder="username"
-          />
-          <input
-            value={password}
-            onChange={handlePassword}
-            placeholder="password"
-            type="password"
-          />
+          <h3>sign in</h3>
+          <div className="login-input">
+            <input
+              value={name}
+              onChange={handleUserName}
+              placeholder="username"
+            />
+
+            <input
+              value={password}
+              onChange={handlePassword}
+              placeholder="password"
+              type="password"
+            />
+          </div>
           <button onClick={() => postJSON(data)}>login</button>
         </div>
+       <button className="new-account">Create your Amazon account</button>
       </div>
     </>
   );

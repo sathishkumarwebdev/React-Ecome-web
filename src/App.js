@@ -5,6 +5,7 @@ import { Routes, Link, useNavigate, Route } from "react-router-dom";
 import { Products } from "./pages/Products";
 import { Login } from "./pages/Login";
 import { Details } from "./pages/Details";
+import { ProductDetails } from "./pages/ProductDetails";
 import { CartProvider } from "./Providers/CartProvider";
 
 export function App() {
@@ -37,6 +38,7 @@ export function App() {
           <Route path="/login" element={<Login setAthu={setAthu} />} />
           <Route path="/Products" element={<Products Products={Products} />} />
           <Route path="/Details" element={<Details />} />
+          <Route path="/ProductDetails" element={<ProductDetails />} />
         </Routes>
       </CartProvider>
     </>

@@ -1,6 +1,7 @@
 import { useContext } from "react";
 import { cartContext } from "../Providers/CartProvider";
 import { Addcart } from "../Addcart";
+import { NavBar } from "../pages/NavBar";
 
 export function Details() {
   const context = useContext(cartContext);
@@ -14,9 +15,10 @@ export function Details() {
     }
   return (
     <>
+      <NavBar />
       <h4>Shopping Cart</h4>
 
-      <div className="container">
+      <div className="add-cart">
         {cart.map((item) => (
           <Addcart item={item} dispatch={dispatch} />
         ))}

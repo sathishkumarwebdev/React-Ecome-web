@@ -1,3 +1,4 @@
+import { MdOutlineDelete } from "react-icons/md";
 export function MiniAddCart({ item, dispatch }) {
   const { title, description, brand, price, rating, discount, thumbnail, qty } =
     item;
@@ -6,7 +7,7 @@ export function MiniAddCart({ item, dispatch }) {
     <>
       <div className="mini-cart-div">
         <div className="mini-cart-img">
-          <img src={thumbnail} alt="phone-pic" />
+          <img className="thumb-img" src={thumbnail} alt="phone-pic" />
         </div>
         <div className="mini-cart-deatail">
           <p>{title}</p>
@@ -21,7 +22,7 @@ export function MiniAddCart({ item, dispatch }) {
               dispatch({ type: "minus", payload: { product: item } });
             }}
           >
-            -
+            <MdOutlineDelete />
           </button>
           {qty}
           <button

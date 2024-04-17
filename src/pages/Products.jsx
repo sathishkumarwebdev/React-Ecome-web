@@ -3,35 +3,51 @@ import { useEffect, useState, useContext } from "react";
 import { RotatingLines } from "react-loader-spinner";
 import { useNavigate } from "react-router";
 import { cartContext } from "../Providers/CartProvider";
-import {loginContext} from "../Providers/LoginProvider";
-import { MiniAddCart } from "./MiniAddCart";
-import {NavBar} from "../pages/NavBar";
+import { loginContext } from "../Providers/LoginProvider";
+import { NavBar } from "../pages/NavBar";
 
 export function Products() {
   const [products, setProducts] = useState([]);
-  const [addCartClick, setaddCartClick] = useState(false);
   const navigate = useNavigate();
   const context = useContext(cartContext);
-  const {accessToken}=useContext(loginContext)
   const { cart, dispatch } = context;
-  console.log(accessToken);
+
+  // useEffect(() => {
+  //   const accesstoken = JSON.parse(localStorage.getItem("access-token"));
+  //   if (accesstoken) {
+  //     settoken(accesstoken);
+  //   }
+  // }, []);
+  // const { access_token } = token;
+
+  // console.log("token:", access_token);
 
   useEffect(() => {
+    const accesstoken = JSON.parse(localStorage.getItem("access-token"));
+    const { access_token } = accesstoken;
     const getData = async () => {
-      const { products } = await fetch("https://dummyjson.com/products", {
-        method: "GET", // or 'PUT'
-        headers: {
-          // Accept: "application/json",
-          Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json",
-        },
+      const { data } = await fetch("https://ecart-qr06.onrender.com/products", {
+        method: "GET",
+        headers: new Headers({
+          Authorization: "Bearer " + access_token,
+        }),
+        // headers: {
+        //   Accept: "application/json",
+        //   Authorization: `Bearer ${access_token}`,
+        //   "Content-Type": "application/json",
+        // },
         // body: JSON.stringify(data),
       }).then((res) => res.json());
-      setProducts(products);
+      setProducts(data.products);
     };
 
-    setTimeout(getData, 1000);
+    if (access_token) {
+      getData();
+    }
+    // setTimeout(getData, 1000);
   }, []);
+
+  //  const { products } = data;
 
   if (!products.length) {
     return (
@@ -58,44 +74,10 @@ export function Products() {
     dispatch({ type: "removeCart", payload: { product } });
   };
 
-  function navClick(e) {
-    navigate("/Details");
-  }
-
-  console.log(cart);
-  const totalCartItem = cart.reduce(
-    (acc, currentvalue) => acc + currentvalue.qty,
-    0
-  );
-
   return (
     <>
-      <NavBar/>
-      <div className="the-cart">
-        <div
-          className="your-cart"
-          onClick={() => {
-            setaddCartClick(!addCartClick);
-          }}
-        >
-          Your Cart:{totalCartItem}
-          {addCartClick ? (
-            <div className="mini-cart">
-              {cart.map((item) => (
-                <MiniAddCart item={item} dispatch={dispatch} />
-              ))}
-              <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  navClick();
-                }}
-              >
-                see more
-              </button>
-            </div>
-          ) : null}
-        </div>
-      </div>
+      <NavBar />
+
       <div className="container">
         {products.map((product) => (
           <Card product={product} addCart={addCart} removeCart={removeCart} />
