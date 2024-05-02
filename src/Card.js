@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { FaStar } from "react-icons/fa";
 import ReactStars from "react-stars";
+import { Products } from "./pages/Products";
+import {AboutProduct} from "./pages/AboutProduct"
 
 export function Card({ product, addCart, removeCart }) {
   const [btn, setbtn] = useState(true);
@@ -31,14 +33,15 @@ export function Card({ product, addCart, removeCart }) {
     }
   };
   function productDetail() {
-    navigate("/ProductDetails");
+    navigate("/ProductDetails", { state: { product } });
+   
   }
   return (
     <>
       <div className="box">
-        <div onClick={() => productDetail()}>
+        <div onClick={() => productDetail()} className="box-detail">
           <div className="img-div">
-            <img src={thumbnail} alt="phone-pic" />
+            <img src={`data:image/jpeg;base64,${thumbnail}`} alt="phone-pic" />
           </div>
           <div className="deatail ff">
             <span className="cc fw-400 fz-20">{title}</span>
@@ -46,7 +49,7 @@ export function Card({ product, addCart, removeCart }) {
             <div className="rating">
               {rating}
               <div>
-                <ReactStars
+                {/* <ReactStars
                   count={5}
                   value={rating}
                   onChange={null}
@@ -54,19 +57,19 @@ export function Card({ product, addCart, removeCart }) {
                   edit={false}
                   color2={"#f08804"}
                   
-                />
+                /> */}
               </div>
             </div>
 
             <div className="discount">
-              <h5>({discountPercentage}%)</h5>&nbsp;
-              <h3>${value}</h3>
+              {/* <h5>({discountPercentage}%)</h5>&nbsp; */}
+              {/* <h3>${value}</h3> */}
             </div>
             <p className="price">
               $<strike>{price}</strike>
             </p>
 
-            <p className="description">{description}</p>
+            {/* <p className="description">{description}</p> */}
           </div>
         </div>
 

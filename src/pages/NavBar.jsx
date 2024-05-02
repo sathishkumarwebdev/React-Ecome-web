@@ -5,6 +5,7 @@ import { cartContext } from "../Providers/CartProvider";
 import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import { RiShoppingCartLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 export function NavBar() {
   const { cart, dispatch } = useContext(cartContext);
@@ -22,8 +23,9 @@ export function NavBar() {
 
   return (
     <nav className="nav-bar">
-      <div className="logo">
-        <img src={logo} alt="logo" />
+      <div className="icon">
+        {/* <img src={logo} alt="logo" /> */}
+        My Cart
       </div>
       <div className="search-input">
         <input type="text" />
@@ -33,8 +35,13 @@ export function NavBar() {
       </div>
       <div>
         <div className="nav-bar-items ff">
+          <div className="nav-admin">
+            <Link to={"/Products"}>Home</Link>
+          </div>
           <div>Language</div>
-          <div>Login</div>
+          <div className="nav-admin">
+            <Link to={"/AdminPanel"}>Admin</Link>
+          </div>
           <div
             className="cart-icon"
             onClick={() => {
@@ -56,7 +63,6 @@ export function NavBar() {
 
                 {cart.length > 3 ? (
                   <div className="see-more">
-                    
                     <button
                       className="seemore-btn"
                       onClick={(e) => {

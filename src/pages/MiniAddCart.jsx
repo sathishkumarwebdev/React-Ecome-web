@@ -7,7 +7,7 @@ export function MiniAddCart({ item, dispatch }) {
     <>
       <div className="mini-cart-div">
         <div className="mini-cart-img">
-          <img className="thumb-img" src={thumbnail} alt="phone-pic" />
+          <img className="thumb-img" src={`data:image/jpeg;base64,${thumbnail}`} alt="phone-pic" />
         </div>
         <div className="mini-cart-deatail">
           <p>{title}</p>

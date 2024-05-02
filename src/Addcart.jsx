@@ -1,15 +1,12 @@
-
 export function Addcart({ item, dispatch }) {
-    
   const { title, description, brand, price, rating, discount, thumbnail, qty } =
     item;
-
 
   return (
     <>
       <div className="cart-div">
         <div className="cart-img">
-          <img src={thumbnail} alt="phone-pic" />
+          <img src={`data:image/jpeg;base64,${thumbnail}`} alt="phone-pic" />
         </div>
         <div className="cart-deatail">
           <h1>{title}</h1>
@@ -19,12 +16,12 @@ export function Addcart({ item, dispatch }) {
           <h3>{discount}</h3>
           <p>{description}</p>
           <div className="btn-div">
-            
             <button
               onClick={() => {
                 dispatch({ type: "minus", payload: { product: item } });
               }}
-            className="btn-minus">
+              className="btn-minus"
+            >
               -
             </button>
             {qty}
@@ -32,7 +29,8 @@ export function Addcart({ item, dispatch }) {
               onClick={() => {
                 dispatch({ type: "plus", payload: { product: item } });
               }}
-            className="btn-plus">
+              className="btn-plus"
+            >
               +
             </button>
           </div>

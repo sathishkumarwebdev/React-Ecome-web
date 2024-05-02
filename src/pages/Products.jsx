@@ -5,6 +5,7 @@ import { useNavigate } from "react-router";
 import { cartContext } from "../Providers/CartProvider";
 import { loginContext } from "../Providers/LoginProvider";
 import { NavBar } from "../pages/NavBar";
+import { getProduts } from '../api/product';
 
 export function Products() {
   const [products, setProducts] = useState([]);
@@ -12,33 +13,25 @@ export function Products() {
   const context = useContext(cartContext);
   const { cart, dispatch } = context;
 
-  // useEffect(() => {
-  //   const accesstoken = JSON.parse(localStorage.getItem("access-token"));
-  //   if (accesstoken) {
-  //     settoken(accesstoken);
-  //   }
-  // }, []);
-  // const { access_token } = token;
-
-  // console.log("token:", access_token);
-
   useEffect(() => {
     const accesstoken = JSON.parse(localStorage.getItem("access-token"));
     const { access_token } = accesstoken;
     const getData = async () => {
-      const { data } = await fetch("https://ecart-qr06.onrender.com/products", {
-        method: "GET",
-        headers: new Headers({
-          Authorization: "Bearer " + access_token,
-        }),
-        // headers: {
-        //   Accept: "application/json",
-        //   Authorization: `Bearer ${access_token}`,
-        //   "Content-Type": "application/json",
-        // },
-        // body: JSON.stringify(data),
-      }).then((res) => res.json());
-      setProducts(data.products);
+      // const { data } = await fetch("https://ecart-qr06.onrender.com/products", {
+      //   method: "GET",
+      //   headers: new Headers({
+      //     Authorization: "Bearer " + access_token,
+      //   }),
+       
+      // }).then((res) => res.json());
+
+      const { data }  = await getProduts();
+      console.log("data ::", data);
+
+
+
+      setProducts(data);
+      console.log(data);
     };
 
     if (access_token) {
@@ -57,6 +50,7 @@ export function Products() {
           height="96"
           width="96"
           color="grey"
+          strokeColor="#f08804"
           strokeWidth="5"
           animationDuration="0.75"
           ariaLabel="rotating-lines-loading"
@@ -80,7 +74,7 @@ export function Products() {
 
       <div className="container">
         {products.map((product) => (
-          <Card product={product} addCart={addCart} removeCart={removeCart} />
+          <Card key={product.id} product={product} addCart={addCart} removeCart={removeCart} />
         ))}
       </div>
     </>

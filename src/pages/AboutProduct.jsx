@@ -1,8 +1,8 @@
-export function AboutProduct({about}){
-    const {title}= about;
-    return (
-      <>
-        <h2>{title}</h2>
-      </>
-    );
+export function AboutProduct({product}) {
+  const {title}=product;
+  return (
+    <>
+      <h2>{title}</h2>
+    </>
+  );
 }
